@@ -1,1 +1,1 @@
-Research Topic: How to generate navmeshes & 3D navmeshes starting from level geometries in Unity.
+Research Topic: How to generate navmeshes from level geometries in Unity (and maybe dip my toes into 3D navmeshes as a bonus)
