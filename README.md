@@ -1,5 +1,7 @@
 Research Topic: How to generate navmeshes from level geometries in Unity (and maybe dip my toes into 3D navmeshes as a bonus)
 
+![]VertexSort.gif
+
 VERTALEN NAAR ENGELS
 
 Mijn originele plan was om te leren hoe Nav Mesh te creëren uit een 3D level, maar door een hele hoop technische onderwerpen waar ik nog niet vertrouwd mee ben, leek dit onderwerp al snel out of scope. Mijn plan is nu om eerst te leren hoe een nav mesh in 2D wordt gegenereerd. 
