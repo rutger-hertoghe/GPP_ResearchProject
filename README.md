@@ -1,6 +1,6 @@
 Research Topic: How to generate navmeshes from level geometries in Unity (and maybe dip my toes into 3D navmeshes as a bonus)
 
-![]VertexSort.gif
+![](https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/VertexSort.gif)
 
 VERTALEN NAAR ENGELS
 
