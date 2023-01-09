@@ -19,7 +19,7 @@ For the first iteration of my NavMesh project I only worked with a single floor 
 
 <sub>*Visualisation of the polygon expansion technique*</sub>
 
-#### Vertex Expansion
+#### Vertex Sorting
 Naturally, it couldn’t be that simple. Unity doesn’t hold vertices of a 2D polygon as a simple array of vertices in a particular winding order. Polygons in Unity are built out of triangle, just as typical meshes are, using a triangle list structure. This means that there is an array holding all the vertices of the shape in a seemingly random order (the vertex array), and a second array of which every three elements represent a triangle (the triangle array). These three elements can each be used as indices in the vertex array, and the the resultring three retrieved vertices represent a triangle. But because of this random vector order I had to find a way to get the vertices in an order by which would you encounter when tracing along the outer edge of the polygon.
 
 To solve this problem, some pen & paper analysis of the problem revealed a pattern that could be used to sort the vertices in a consecutive fashion. Every triangle described in the triangle array is adjacent to the next triangle described. This means that two of the indices it holds, are identical to two indices held by the next triangle. To start off, you copy over the first three indices of the triangle array to a new container, describing the first triangle. Next, look at the next triangle and find the element that is not in the container yet and then insert that element in the new container, inbetween the two elements that this container and your current triangle have in common.
