@@ -68,6 +68,12 @@ The final step to create a usable polygon to generate a Navigation Graph from, w
 
 <sub>*Final triangulated Navigation Mesh polygon after running ear clipping algorithm*</sub>
 
+#### Overlapping obstacles
+With the setup until now, the NavMesh is unable to handle overlapping obstacles. To be able to account for this, the polygons of overlapping obstacles should be joined after their respective polygon expansions.
+
+## Closing remarks
+I do realize that the method by which I expanded the obstacle polygons is flawed. The expansion is not quite far enough near the tips of the ships, thus possible causing agents to get stuck if they were to traverse the NavMesh. While this could quite easily be handled in the way the expansion is done, time constraints forced me to focus on more important aspects of NavMesh generation. In the current iteration of this project, setting the radius by which to expand the shape slightly higher than the radius of the agent for whom the mesh is intended, should suffice.
+
 Sources:
 https://www.geometrictools.com/Documentation/TriangulationByEarClipping.pdf
 GA TERUG OVER BRONNEN EN MAAK GEDETAILLEERDE LOGS
