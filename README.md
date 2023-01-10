@@ -55,7 +55,7 @@ This algorithm to add holes to a polygon was implemented recursively. After join
 #### Ear clipping
 The final step to create a usable polygon to generate a Navigation Graph from, was to triangulate the resulting polygon from the previous step. For this I implemented an ear clipping algorithm (ADD REFERENCE). A ear clipping algorithm works by finding an ear, storing the triangle of that ear in a list of triangles and then removing the vertex on the tip of that ear from the vertex order. An ear (in my implementation) is defined as a set of three consecutive vertices in the vertex order with two properties. The first being that the lines between the first and the second vertex, and the second and third, do not form a concave interior angle. The second being that no other vertices lie within the bounds of the triangle formed by the ear vertices. Finally, when only three vertices remain, add these final three vertices as the last triangle in the list of triangles.
 
-<img src="(https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/EarClipping.gif" 
+<img src="https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/EarClipping.gif" 
      width="400" 
      height=auto />
      
