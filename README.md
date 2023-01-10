@@ -4,9 +4,6 @@ For my project I decided to generate 2D meshes from scratch. I wanted to get a t
 #### What is a Navigation Mesh?
 **A navigation mesh (or NavMesh, as the cool kids say it) is a collection of two-dimensional polygons, which define areas of the map traversable by (AI) agents**. A pathfinding algorithm, such as A* can then be used to traverse said mesh. NavMeshes can be created manually or automatically, or through a combination of both. Most commonly, NavMeshes are static and immutable, which in plain English means that the NavMesh doesn't change during runtime. Dynamic NavMeshes also exist, but are harder to implement and NavMesh recalculation might be costly (GET REFERENCE AND POSSIBLY CORRECT THIS IF WRONG). **For this project I will solely be focusing on static NavMeshes.**
 
-// WRITE A SEGUE HERE
-2D Nav Meshes – First identify areas (~polygons) that can be walked upon. Merge adjacent (~somewhat overlapping) walkable polygons and create a container holding the walkable polygons. Next take in account blocked areas (~wall, obstacles, …). Since we’re working in a 2D space, these blocked areas will be other polygons. 
-
 ## 2D NavMesh
 #### Polygon Expansion
 For the first iteration of my NavMesh project I only worked with a single floor geometry. The first challenge was to expand all level geometries to take in account a potential AI agent's size, given by a certain radius. I devised my own simple algorithm that should work for any convex polygon. The idea was as follows. For every single vertex of the polygon, I generate three new points. Two of these points would be respectively perpendicular to each of the sides adjacent to the vertex, at a distance of the previously mentioned radius. The third point would be exactly inbetween the two aforementioned points, also at the given distance*. These three points represented that vertex of the polygon expanded. So for every vertex of the polygon, these three points were added to an array representing the expanded polygon.
@@ -41,7 +38,13 @@ After successfully implementing both of the above algorithm, the final polygon e
 VERTALEN NAAR ENGELS
 
 #### Punching holes
-The next obstacle (pun intended) was to cut the expanded polygons of the obstacles out of the ground plane. From now on I will refer to these expanded polygons as holes. At first I couldn't fathom how a polygon could contain holes, but after some more pen and paperwork I figured that the vertices of the hole should somehow become part of the outer edge of the polygon. I started by figuring out how this could be done for a ground plane with a single hole. The best way to do this I reckoned would be to find the combination of vertices, one of the hole and one of the ground plane, with the shortest distance between them. This to ensure that the connection between the two chosen FINISH UP WRITING THIS
+The next obstacle (pun intended) was to cut the expanded obstacle polygons out of the ground plane. To do this, holes had to be treated as if they were part of the outer bounds of the polygon. This was achieved by creating a link between a vertex of the ground plane with a vertex of the hole. For this I utilized a brute force algorithm. First I found the combination of base shape vertex and hole vertex with the shortest distance between them. Next I looped through the base shape vertices, and upon encountering the aforementioned base shape vertex, I inserted the hole vertices in reverse winding order, starting from the found hole vertex. Finally, I respectively added the found hole vertex and base vertex (in that order!) once again, before adding the remaining base shape vertices.
+
+<img src="https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/HolePunching.gif" 
+     width="400" 
+     height=auto />
+
+This algorithm to add holes to a polygon was implemented recursively. After joining a hole polygon with the bass polygon, the hole polygon is removed from the list and the algorithm checks if there are still holes remaining in the list. If so, the algorithm passes the resulting polygon and the remaining holes on to itself again.
 
 Mijn originele plan was om te leren hoe Nav Mesh te creëren uit een 3D level, maar door een hele hoop technische onderwerpen waar ik nog niet vertrouwd mee ben, leek dit onderwerp al snel out of scope. Mijn plan is nu om eerst te leren hoe een nav mesh in 2D wordt gegenereerd. 
 
