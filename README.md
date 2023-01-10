@@ -17,7 +17,7 @@ For the first iteration of my NavMesh project I only worked with a single floor 
 <sub>*Visualisation of the polygon expansion technique*</sub>
 
 #### Vertex Sorting
-Naturally, it couldn’t be that simple. Unity doesn’t hold vertices of a 2D polygon as a simple array of vertices in a particular winding order. Polygons in Unity are built out of triangle, just as typical meshes are, using a triangle list structure. This means that there is an array holding all the vertices of the shape in a seemingly random order (the vertex array), and a second array of which every three elements represent a triangle (the triangle array). These three elements can each be used as indices in the vertex array, and the the resultring three retrieved vertices represent a triangle. But because of this random vector order I had to find a way to get the vertices in an order by which would you encounter when tracing along the outer edge of the polygon.
+Naturally, it couldn’t be that simple. Unity doesn’t hold vertices of a 2D polygon as a simple array of vertices in a particular winding order. Polygons in Unity are built out of triangles, just as typical meshes are, using a triangle list structure. This means that there is an array holding all the vertices of the shape in a seemingly random order (the vertex array), and a second array of which every three elements represent a triangle (the triangle array). These three elements can each be used as indices in the vertex array, and the the resultring three retrieved vertices represent a triangle. But because of this random vector order I had to find a way to get the vertices in an order by which would you encounter when tracing along the outer edge of the polygon.
 
 To solve this problem, some pen & paper analysis of the problem revealed a pattern that could be used to sort the vertices in a consecutive fashion. Every triangle described in the triangle array is adjacent to the next triangle described. This means that two of the indices it holds, are identical to two indices held by the next triangle. To start off, you copy over the first three indices of the triangle array to a new container, describing the first triangle. Next, look at the next triangle and find the element that is not in the container yet and then insert that element in the new container, inbetween the two elements that this container and your current triangle have in common.
 
@@ -52,9 +52,18 @@ This algorithm to add holes to a polygon was implemented recursively. After join
      
 <sub>*Result of recursive 'hole punching' algorithm*</sub>
 
-Mijn originele plan was om te leren hoe Nav Mesh te creëren uit een 3D level, maar door een hele hoop technische onderwerpen waar ik nog niet vertrouwd mee ben, leek dit onderwerp al snel out of scope. Mijn plan is nu om eerst te leren hoe een nav mesh in 2D wordt gegenereerd. 
+#### Ear clipping
+The final step to create a usable polygon to generate a Navigation Graph from, was to triangulate the resulting polygon from the previous step. For this I implemented an ear clipping algorithm (ADD REFERENCE). A ear clipping algorithm works by finding an ear, storing the triangle of that ear in a list of triangles and then removing the vertex on the tip of that ear from the vertex order. An ear (in my implementation) is defined as a set of three consecutive vertices in the vertex order with two properties. The first being that the lines between the first and the second vertex, and the second and third, do not form a concave interior angle. The second being that no other vertices lie within the bounds of the triangle formed by the ear vertices. Finally, when only three vertices remain, add these final three vertices as the last triangle in the list of triangles.
+
+<img src="(https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/EarClipping.gif" 
+     width="400" 
+     height=auto />
+     
+<sub>*Demonstration of the ear clipping algorithm*</sub>
+
 
 Sources:
+https://www.geometrictools.com/Documentation/TriangulationByEarClipping.pdf
 GA TERUG OVER BRONNEN EN MAAK GEDETAILLEERDE LOGS
 - Book title unknown: C11 Advanced Navmesh Generation (find out title!)
     --> Explains workings of NavMeshes in unity. Voxel based 3D approach, interesting, but probably too out of scope and does not go deep into the technicalities.
