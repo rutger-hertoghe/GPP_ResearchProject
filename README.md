@@ -43,8 +43,13 @@ The next obstacle (pun intended) was to cut the expanded obstacle polygons out o
 <img src="https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/HolePunching.gif" 
      width="400" 
      height=auto />
+     
+<sub>*Step by step explanation of the hole punching algorithm*</sub>
 
-This algorithm to add holes to a polygon was implemented recursively. After joining a hole polygon with the bass polygon, the hole polygon is removed from the list and the algorithm checks if there are still holes remaining in the list. If so, the algorithm passes the resulting polygon and the remaining holes on to itself again.
+This algorithm to add holes to a polygon was implemented recursively. After joining a hole polygon with the bass polygon, the hole polygon is removed from the list and the algorithm checks if there are still holes remaining in the list. If so, the algorithm passes the resulting polygon and the remaining holes on to itself again. There are probably better ways to implement this algorithm, as the brute force approach has a time of O(n * m) or O(n²) in standard big O notation. I mention no source here, because I devised of this method myself, but after researching the next topic I realized that the adding of holes to a polygon in this way is a long standing way of working.
+<img src="https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/HolePuncherResult.png" 
+     width="400" 
+     height=auto />
 
 Mijn originele plan was om te leren hoe Nav Mesh te creëren uit een 3D level, maar door een hele hoop technische onderwerpen waar ik nog niet vertrouwd mee ben, leek dit onderwerp al snel out of scope. Mijn plan is nu om eerst te leren hoe een nav mesh in 2D wordt gegenereerd. 
 
