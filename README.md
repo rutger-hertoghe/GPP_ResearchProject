@@ -35,8 +35,6 @@ After successfully implementing both of the above algorithm, the final polygon e
      
 <sub>*Final result after vertex sorting and polygon expansion for a triangle, square, and hexagon. Expansion size set to 0.5*</sub>
 
-VERTALEN NAAR ENGELS
-
 #### Punching holes
 The next obstacle (pun intended) was to cut the expanded obstacle polygons out of the ground plane. To do this, holes had to be treated as if they were part of the outer bounds of the polygon. This was achieved by creating a link between a vertex of the ground plane with a vertex of the hole. For this I utilized a brute force algorithm. First I found the combination of base shape vertex and hole vertex with the shortest distance between them. Next I looped through the base shape vertices, and upon encountering the aforementioned base shape vertex, I inserted the hole vertices in reverse winding order, starting from the found hole vertex. Finally, I respectively added the found hole vertex and base vertex (in that order!) once again, before adding the remaining base shape vertices.
 
@@ -47,9 +45,12 @@ The next obstacle (pun intended) was to cut the expanded obstacle polygons out o
 <sub>*Step by step explanation of the hole punching algorithm*</sub>
 
 This algorithm to add holes to a polygon was implemented recursively. After joining a hole polygon with the bass polygon, the hole polygon is removed from the list and the algorithm checks if there are still holes remaining in the list. If so, the algorithm passes the resulting polygon and the remaining holes on to itself again. There are probably better ways to implement this algorithm, as the brute force approach has a time of O(n * m) or O(n²) in standard big O notation. I mention no source here, because I devised of this method myself, but after researching the next topic I realized that the adding of holes to a polygon in this way is a long standing way of working.
+
 <img src="https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/HolePuncherResult.png" 
      width="400" 
      height=auto />
+     
+<sub>*Result of recursive 'hole punching' algorithm*</sub>
 
 Mijn originele plan was om te leren hoe Nav Mesh te creëren uit een 3D level, maar door een hele hoop technische onderwerpen waar ik nog niet vertrouwd mee ben, leek dit onderwerp al snel out of scope. Mijn plan is nu om eerst te leren hoe een nav mesh in 2D wordt gegenereerd. 
 
