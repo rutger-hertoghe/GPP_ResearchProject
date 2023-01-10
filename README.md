@@ -58,9 +58,15 @@ The final step to create a usable polygon to generate a Navigation Graph from, w
 <img src="https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/EarClipping.gif" 
      width="400" 
      height=auto />
-     
+
 <sub>*Demonstration of the ear clipping algorithm*</sub>
 
+<img src="https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/EarClippingResult.png" 
+     width="400" 
+     height=auto />  
+
+
+<sub>*Final triangulated Navigation Mesh polygon after running ear clipping algorithm*</sub>
 
 Sources:
 https://www.geometrictools.com/Documentation/TriangulationByEarClipping.pdf
