@@ -72,9 +72,11 @@ The final step to create a usable polygon to generate a Navigation Graph from, w
 With the setup done, I decided to also create a mockup of a navigation graph, the actual data that would be used in a pathfinding algorithm next to the mesh geometry. A navigation graph consists of a set of nodes, placed on lines between two adjacent triangles, and the connections between them. I must admit that this graph is only a mockup. I implemented the NavGraph generation with a recursive algorithm that has a crucial design flaw. When encountering a triangle for which nodes and connections have already been created, he creates another node on the line adjacent to that triangle, instead of linking to the already existing one. While this results in a visually identical looking NavGraph, it is not practically functional. The problem lays in that my code does not remember which nodes and connections belong to which triangle. This could be solved by revisioning my data structures, but unfortunately the deadline draws near and I do not want to risk breaking my current iteration.
 
 <img src="https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/FinalNavGraph.png" 
-     width="400" 
+     width=auto 
      height=auto />  
 
+
+<sub>*Example of the final NavMesh & NavGraph. The white area represents the floor plane, the red areas obstacles. The generated NavMesh is indicated by the green lines. NavGraph nodes are indicated by magenta diamonds, NavGraph connections by lines varying between blue & red. The variation in connection colors represent the cost. Lines closer to blue represent a low cost connection, whereas lines closer to red represent a high cost connection.*</sub>
 
 Do lines intersect?
 https://algorithmtutor.com/Computational-Geometry/Check-if-two-line-segment-intersect/
