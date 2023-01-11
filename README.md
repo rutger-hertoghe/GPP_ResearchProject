@@ -8,7 +8,7 @@ For my project I decided to generate 2D meshes from scratch. I wanted to get a t
 #### Polygon Expansion
 For the current iteration of my NavMesh project I only worked with a single floor geometry. As a starting point, I broadly followed the plan of steps outlined by Romstöck <sup>5</sup>. The first challenge was to expand all level geometries to take in account a potential AI agent's size, given by a certain radius. I devised my own simple algorithm that should work for any convex polygon. The idea was as follows: For every single vertex of the polygon, I generate three new points. Two of these points would be respectively perpendicular to each of the sides adjacent to the vertex, at a distance of the previously mentioned radius. The third point would be exactly inbetween the two aforementioned points, also at the given distance*. These three points represented that vertex of the polygon expanded. So for every vertex of the polygon, these three points were added to an array representing the expanded polygon.
 
-(*: while this is not exactly what happens on the programming side, it provides a more concise explanation.)
+*(*: while this is not exactly what happens on the programming side, it provides a more concise explanation.)*
 
 <img src="https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/VertexExpand.gif" 
      width="400" 
