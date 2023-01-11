@@ -68,16 +68,30 @@ The final step to create a usable polygon to generate a Navigation Graph from, w
 
 <sub>*Final triangulated Navigation Mesh polygon after running ear clipping algorithm*</sub>
 
-#### Overlapping obstacles
-With the setup until now, the NavMesh is unable to handle overlapping obstacles. To be able to account for this, the polygons of overlapping obstacles should be joined after their respective polygon expansions. The simplest, but not so efficient way to do this is by brute force: looping through every line segment of the first polygon, and checking for every line segment of the second polygon whether the two intersect. There exist more elegant algorithms using a sweep line algorithm, involving binary search trees. At the time of writing, I am unfortunately pressed for time, and not confident in my ability to properly implement a binary search tree along with algorithm within those given time constraints.
+#### Finally, a NavGraph
+With the setup done, I decided to also create a mockup of a navigation graph, the actual data that would be used in a pathfinding algorithm next to the mesh geometry. A navigation graph consists of a set of nodes, placed on lines between two adjacent triangles, and the connections between them. I must admit that this graph is only a mockup. I implemented the NavGraph generation with a recursive algorithm that has a crucial design flaw. When encountering a triangle for which nodes and connections have already been created, he creates another node on the line adjacent to that triangle, instead of linking to the already existing one. While this results in a visually identical looking NavGraph, it is not practically functional. The problem lays in that my code does not remember which nodes and connections belong to which triangle. This could be solved by revisioning my data structures, but unfortunately the deadline draws near and I do not want to risk breaking my current iteration.
 
-I thus opted to use the naive, brute force approach. To optimize this a little however, I will be calculating Axis-Aligned Bounding Boxes for all my obstacles and checking first whether these bounding boxes overlap, before checking every line segment of the first obstacle polygon, to every line segment of the second obstacle polygon.
+<img src="https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/FinalNavGraph.png" 
+     width="400" 
+     height=auto />  
+
 
 Do lines intersect?
 https://algorithmtutor.com/Computational-Geometry/Check-if-two-line-segment-intersect/
 
 ## Closing remarks
+#### Polygon expansion
 I do realize that the method by which I expanded the obstacle polygons is flawed. The expansion is not quite far enough near the tips of the ships, thus possible causing agents to get stuck if they were to traverse the NavMesh. While this could quite easily be handled in the way the expansion is done, time constraints forced me to focus on more important aspects of NavMesh generation. In the current iteration of this project, setting the radius by which to expand the shape slightly higher than the radius of the agent for whom the mesh is intended, should suffice.
+
+#### Overlapping polygons
+At this moment, the NavMesh generation has several requirements to work. Firstly, can there only be a single floorplane and secondly do the expanded obstacle polygons need to be fully contained within the bounds of this floorplane. Obstacle polygons, whether expanded or not, are not allowed to overlap and must be convex. To support overlap, the expanded polygons would need to be merged or clipped depending on the situation. This would require testing for intersections between all the line segments in the scene. Functionality to support this could be implemented using either an inefficent naive approach or a line sweep algorithm.
+Line intersection checking and retrieving the location of this intersection require an algorithm in and of itself, involving vector math (cross products).
+The **naive approach**, operating in O(n²) time, would require comparing every line segment in the scene, with every other line segment. An optimization for this would be to first compare overlap between Axis-Aligned Bounding Boxes (AABB's) for every polygon first, and if two polygons overlap, check for intersections between their respective line segments. 
+The **line sweep method** (O(log(n) * n time) is more efficient and works by sweep an imaginary line from one side of the scene to the opposing side and comparing only the line segments that are currently next to each other in a data container called the sweep line state. Note that there is actually not really a line sweeping over the screen, but that the sweep line checks at discrete points (if sweeping over the y-axis, these are y-coordinates), stored in what is called the event queue. For efficiency, both the sweep line state and the event queue are binary search trees. This method thus requires the implementation of a data structure that does not exist by default in C#.
+At the time of writing, I was unfortunately pressed for time, and not confident in my ability to properly implement either of the above algorithms and data structures in the remaining time frame.
+
+#### 3D NavMeshes
+While I initially set out to generate 3D NavMeshes, I felt that the basic concepts needed to generate NavMeshes eluded me. Hence my fallback to 2D NavMeshes to first get a firm grip on the concept in a simpler space. I do however realize that 2D NavMeshes and 3D NavMeshes differ quite a lot. 3D NavMeshes work by first voxelizing the scene
 
 Sources:
 https://www.geometrictools.com/Documentation/TriangulationByEarClipping.pdf
