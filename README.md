@@ -76,7 +76,6 @@ With the setup done, I decided to also create a **mockup of a navigation graph**
      width=auto 
      height=auto />  
 
-
 <sub>*Example of the final NavMesh & NavGraph. The white area represents the floor plane, the red areas obstacles. The generated NavMesh is indicated by the green lines. NavGraph nodes are indicated by magenta diamonds, NavGraph connections by lines varying between blue & red. The variation in connection colors represent the cost. Lines closer to blue represent a low cost connection, whereas lines closer to red represent a high cost connection.*</sub>
 
 ## Closing remarks
