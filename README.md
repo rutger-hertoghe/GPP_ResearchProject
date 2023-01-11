@@ -1,10 +1,11 @@
 # Research Topic: Generating A Navigation Mesh From Scratch Using Level Geometries In Unity
+## Description
 For my project I decided to generate 2D meshes from scratch. I wanted to get a truly in-depth look at every part of the process and thus investigated every type of algorithm along the way. I do believe this manner of investigation worthwhile. Knowledge of algorithms and ideas in one field might unexpectedly transfer to solve issues in another field. Navigation meshes themselves are a good example of an idea transferring, as it originated in the field of robotics<sup>1</sup>, to be translated and popularized in game AI’s at the turn of the millennium<sup>2</sup>. 
 
 #### What is a Navigation Mesh?
 **A navigation mesh (or NavMesh, as the cool kids say it) is a collection of two-dimensional polygons, which define areas of the map traversable by (AI) agents<sup>3</sup>**. A pathfinding algorithm, such as A* can then be used to traverse said mesh. NavMeshes can be created manually or automatically, or through a combination of both. Most commonly, NavMeshes are static and immutable, which in plain English means that the NavMesh doesn't change during runtime. Dynamic NavMeshes also exist, but are harder to implement and NavMesh recalculation might be costly, depending on the manner of implementation<sup>4</sup>. **For this project I solely be focused on static NavMeshes.**
 
-## 2D NavMesh
+## 2D NavMesh: Design & Implementation
 #### Polygon Expansion
 For the current iteration of my NavMesh project I only worked with a **single floor geometry and convex, non-overlapping polygons**. As a starting point, I broadly followed the plan of steps outlined by Romstöck <sup>5</sup>. The first challenge was to **expand all level geometries to take in account a potential AI agent's size**, given by a certain radius. I devised my own simple algorithm that should work for any convex polygon. The idea was as follows: For every single vertex of the polygon, I generate three new points. Two of these points would be respectively perpendicular to each of the sides adjacent to the vertex, at a distance of the previously mentioned radius. The third point would be exactly inbetween the two aforementioned points, also at the given distance*. These three points represented that vertex of the polygon expanded. So for every vertex of the polygon, these three points were added to an array representing the expanded polygon.
 
@@ -68,7 +69,7 @@ The final step to create a usable polygon to generate a Navigation Graph from, w
 
 <sub>*Final triangulated Navigation Mesh polygon after running ear clipping algorithm*</sub>
 
-#### Finally, a NavGraph
+#### Finally, a NavGraph (Result)
 With the setup done, I decided to also create a **mockup of a navigation graph**, the actual data that would be **used in a pathfinding algorithm** next to the mesh geometry. **A navigation graph consists of a set of nodes, placed on lines between two adjacent triangles, and the connections between them**. I must admit that this graph is only a mockup. I implemented the NavGraph generation with a recursive algorithm that has a crucial design flaw. When encountering a triangle for which nodes and connections have already been created, it creates another node on the line adjacent to that triangle, instead of linking to the already existing one. While this results in a visually identical looking NavGraph, it is not practically functional. The problem lays in that the process does not store which triangles the nodes and connections belong to. This could be solved by revisioning my data structures, but unfortunately due to the deadline for this topic and not wanting to risk breaking my current iteration, I have not solved this issue.
 
 <img src="https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/FinalNavGraph.png" 
@@ -77,9 +78,6 @@ With the setup done, I decided to also create a **mockup of a navigation graph**
 
 
 <sub>*Example of the final NavMesh & NavGraph. The white area represents the floor plane, the red areas obstacles. The generated NavMesh is indicated by the green lines. NavGraph nodes are indicated by magenta diamonds, NavGraph connections by lines varying between blue & red. The variation in connection colors represent the cost. Lines closer to blue represent a low cost connection, whereas lines closer to red represent a high cost connection.*</sub>
-
-Do lines intersect?
-https://algorithmtutor.com/Computational-Geometry/Check-if-two-line-segment-intersect/
 
 ## Closing remarks
 #### Polygon expansion
@@ -111,6 +109,3 @@ While I initially set out to generate 3D NavMeshes, I felt that both the needed 
 10) Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). "Introduction to algorithms (3rd ed.)." The MIT Press.
 11) Oliva R., Pelechano, N. (2013). "NEOGEN: Near Optimal Generator of Navigation Meshes for 3D Multi-Layered Environments". In Computers & Graphics 37(5):403-412, <https://doi.org/10.1016/j.cag.2013.03.004>
 12) Lazzaroni, S. (2020). "Navigation Mesh Generation", accessed  7 january 2023, <https://www.stefanolazzaroni.com/navigation-mesh-generation>.
-
-Sources to add:
-Github, Unknown Author (2016). "Recast & Detour", accessed 7 january 2023, <https://github.com/recastnavigation/recastnavigation>.
