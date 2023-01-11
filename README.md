@@ -87,18 +87,18 @@ I do realize that the method by which I expanded the obstacle polygons is flawed
 
 #### Overlapping polygons
 At this moment, the NavMesh generation has several requirements to work. Firstly, there can only be a single floorplane. Secondly, do the expanded obstacle polygons need to be fully contained within the bounds of this floorplane. Furthermore, obstacle polygons, whether expanded or not, are not allowed to overlap and must be convex. To support overlap, the expanded polygons would need to be merged or clipped depending on the situation. This would require testing for intersections between all the line segments in the scene. Functionality to support this could be implemented using either an inefficent naive approach or a sweep line algorithm<sup>7, 8, 9</sup>.
-Line intersection checking and retrieving the location of this intersection require an algorithm in and of itself, involving vector math<sup>8, 9, 10</sup>.
+Line intersection checking and retrieving the location of this intersection require an algorithm in and of itself, involving vector math<sup>10</sup>.
+
 The **naive approach**, operating in O(n²) time, would require comparing every line segment in the scene, with every other line segment. An optimization for this would be to first compare overlap between Axis-Aligned Bounding Boxes (AABB's) for every polygon first, and if two polygons overlap, check for intersections between their respective line segments. 
+
 The **sweep line approach** (O(log(n) * n time) is more efficient and works by sweep an imaginary line from one side of the scene to the opposing side and comparing only the line segments that are currently next to each other in a data container called the sweep line state. Note that there is actually not really a line sweeping over the screen, but that the sweep line checks at discrete points (if sweeping over the y-axis, these are y-coordinates), stored in what is called the event queue. For efficiency, both the sweep line state and the event queue are binary search trees. This method thus requires the implementation of a data structure that does not exist by default in C#.
+
 At the time of writing, I was unfortunately pressed for time, and not confident in my ability to properly implement either of the above algorithms and data structures in the remaining time frame.
 
 #### 3D NavMeshes
 While I initially set out to generate 3D NavMeshes, I felt that the basic concepts needed to generate NavMeshes eluded me. Hence my fallback to 2D NavMeshes to first get a firm grip on the concept in a simpler space. I do however realize that 2D NavMeshes and 3D NavMeshes differ quite a lot. 3D NavMeshes work by first voxelizing the scene
 
 ## Sources in order of first appearance:
-Website referencing reference:
-Department of Social Services 2020, Department of social services website, Australian government, accessed 20 February 2020, <https://www.dss.gov.au/>.
-
 1) Arkin, R. C. (1986). "Path Planning for a Vision-Based Autonomous Robot", University of Massachusetts.
 2) Snook, G. (2000). "Simplified 3D Movement and Pathfinding Using Navigation Meshes". In DeLoura, Mark (ed.). Game Programming Gems. Charles River Media. pp. 288–304. ISBN 1-58450-049-2.
 3) Wikipedia, 19 August 2022, accessed 7 january 2023 <https://en.wikipedia.org/wiki/Navigation_mesh#:~:text=A%20navigation%20mesh%20is%20a,are%20part%20of%20the%20environment>.
