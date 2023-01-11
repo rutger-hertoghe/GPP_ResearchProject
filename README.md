@@ -85,7 +85,7 @@ https://algorithmtutor.com/Computational-Geometry/Check-if-two-line-segment-inte
 #### Polygon expansion
 I do realize that the method by which I expanded the obstacle polygons is flawed. The **expansion does not extend quite far enough at the angles of shapes, thus agents could possibly get stuck** if they were to traverse the NavMesh. While this could quite easily be handled in the way the expansion is done, time constraints forced me to focus on more important aspects of NavMesh generation. In the current iteration of this project, setting the radius by which to expand the shape slightly higher than the radius of the agent for whom the mesh is intended, should suffice.
 
-#### Overlapping polygons
+#### NavMesh Generation Limitations
 At this moment, the **NavMesh generation has several requirements** to work. Firstly, there can only be a **single floorplane**. Secondly, do the expanded obstacle **polygons need to be fully contained within the bounds of this floorplane**. Furthermore, **obstacle polygons**, whether expanded or not, **are not allowed to overlap and must be convex**. To support overlap, the expanded polygons would need to be merged or clipped depending on the situation. This would require testing for intersections between all the line segments in the scene. Functionality to support this could be implemented using either an inefficent naive approach or a sweep line algorithm<sup>7, 8, 9</sup>.
 Line intersection checking and retrieving the location of this intersection require an algorithm in and of itself, involving vector math<sup>10</sup>.
 
@@ -96,12 +96,12 @@ The **sweep line approach** (O(log(n) * n time) is more efficient and works by s
 At the time of writing, I was unfortunately pressed for time, and not confident in my ability to properly implement either of the above algorithms and data structures in the remaining time frame.
 
 #### 3D NavMeshes
-While I initially set out to generate 3D NavMeshes, I felt that the basic concepts needed to generate NavMeshes eluded me. Hence my fallback to 2D NavMeshes to first get a firm grip on the concept in a simpler space. I do however realize that 2D NavMeshes and 3D NavMeshes differ quite a lot. 3D NavMeshes work by first voxelizing the scene
+While I initially set out to generate 3D NavMeshes, I felt that both the needed basic concepts and advanced techniques to generate 3D NavMeshes eluded me. Hence my fallback to 2D NavMeshes to first get a firm grip on the concept in a simpler space. I do however realize that 2D NavMeshes and 3D NavMeshes differ quite a lot in terms of generation, the latter being a lot more advanced. **3D NavMeshes work by first voxelizing the scene**. Depending on the needs of the implementation, this voxelized scene is then **used to identify and extract the different walkable layers**<sup>11</sup> and/or a heightfield<sup>12</sup>. Finally, the **original source meshes are generally used again along with the voxelized scene to clip the correct NavMesh polygons** and link different layers to one another if needed. Developing this whole process from scratch and implementing every necessary algorithm myself would be a project taking weeks, if not months.
 
 ## Sources in order of first appearance:
 1) Arkin, R. C. (1986). "Path Planning for a Vision-Based Autonomous Robot", University of Massachusetts.
 2) Snook, G. (2000). "Simplified 3D Movement and Pathfinding Using Navigation Meshes". In DeLoura, Mark (ed.). Game Programming Gems. Charles River Media. pp. 288–304. ISBN 1-58450-049-2.
-3) Wikipedia, 19 August 2022, accessed 7 january 2023 <https://en.wikipedia.org/wiki/Navigation_mesh#:~:text=A%20navigation%20mesh%20is%20a,are%20part%20of%20the%20environment>.
+3) Wikipedia (2022), accessed 7 january 2023 <https://en.wikipedia.org/wiki/Navigation_mesh#:~:text=A%20navigation%20mesh%20is%20a,are%20part%20of%20the%20environment>.
 4) Van Toll, W. & Geraerts, R. (2012) "A Navigation Mesh for Dynamic Environments". In Computer Animation and Virtual Worlds 23(6):535-546, <DOI:10.1002/cav.1468>.
 5) Romstöck, C. (2014). "Generating 2D Navmeshes", accessed 7 january 2023 <https://www.gamedev.net/tutorials/programming/artificial-intelligence/generating-2d-navmeshes-r3393/>.
 6) Eberly, D. (2002). "Triangulation by Ear Clipping".
@@ -109,3 +109,8 @@ While I initially set out to generate 3D NavMeshes, I felt that the basic concep
 8) O'Rourke, J. (1998). "Intersection of NonConvex Polygons.", In Computational Geometry in C.
 9) Kindermann, P. (2021). "Sweep-Line Algorithm for Line Intersection", accessed 10 january 2023, <https://www.youtube.com/playlist?list=PLubYOWSl9mItBLmB2WiFU0A_WINUSLtGH>.
 10) Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). "Introduction to algorithms (3rd ed.)." The MIT Press.
+11) Oliva R., Pelechano, N. (2013). "NEOGEN: Near Optimal Generator of Navigation Meshes for 3D Multi-Layered Environments". In Computers & Graphics 37(5):403-412, <https://doi.org/10.1016/j.cag.2013.03.004>
+12) Lazzaroni, S. (2020). "Navigation Mesh Generation", accessed  7 january 2023, <https://www.stefanolazzaroni.com/navigation-mesh-generation>.
+
+Sources to add:
+Github, Unknown Author (2016). "Recast & Detour", accessed 7 january 2023, <https://github.com/recastnavigation/recastnavigation>.
