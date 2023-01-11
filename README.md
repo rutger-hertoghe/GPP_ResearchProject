@@ -75,8 +75,10 @@ The final step to create a usable polygon to generate a Navigation Graph from, w
 
 <sub>*Final triangulated Navigation Mesh polygon after running ear clipping algorithm*</sub>
 
-#### Finally, a NavGraph (Result)
+#### Finally, a NavGraph
 With the setup done, I decided to also create a **mockup of a navigation graph**, the actual data that would be **used in a pathfinding algorithm** next to the mesh geometry. **A navigation graph consists of a set of nodes, placed on lines between two adjacent triangles, and the connections between them**. I must admit that this graph is only a mockup. I implemented the NavGraph generation with a recursive algorithm that has a crucial design flaw. When encountering a triangle for which nodes and connections have already been created, it creates another node on the line adjacent to that triangle, instead of linking to the already existing one. While this results in a visually identical looking NavGraph, it is not practically functional. The problem lays in that the process does not store which triangles the nodes and connections belong to. This could be solved by revisioning my data structures, but unfortunately due to the deadline for this topic and not wanting to risk breaking my current iteration, I have not solved this issue.
+
+## Result
 
 <img src="https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/FinalNavGraph.png" 
      width=auto 
