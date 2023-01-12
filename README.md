@@ -1,6 +1,6 @@
 # Research Topic: Generating A Navigation Mesh From Scratch Using Level Geometries In Unity
 ## Description
-For my project I decided to generate 2D meshes from scratch. I wanted to get a truly in-depth look at every part of the process and thus investigated every type of algorithm along the way. The end result was a NavMesh generator capable of dealing with a solid floor plane, with convex, non-overlapping obstacles, fully enclosed by the floorplane. Unfortunately, the final NavGraph is not yet functional, and some of the algorithms implemented are inefficient. Below is a picture of the generated result.
+For my project I decided to generate 2D NavMeshes from scratch. I wanted to get a truly in-depth look at every part of the process and thus investigated every type of algorithm along the way. The end result was a NavMesh generator capable of dealing with a solid floor plane, with convex, non-overlapping obstacles, fully enclosed by the floorplane. Unfortunately, the final NavGraph is not yet functional, and some of the algorithms implemented are inefficient. Below is a picture of the generated result.
 
 <img src="https://github.com/rutger-hertoghe/GPP_ResearchProject/blob/master/FinalResult.png" 
      width="400" 
@@ -9,7 +9,7 @@ For my project I decided to generate 2D meshes from scratch. I wanted to get a t
 I do believe this manner of investigation worthwhile. Knowledge of algorithms and ideas in one field might unexpectedly transfer to solve issues in another field. Navigation meshes themselves are a good example of an idea transferring, as it originated in the field of robotics<sup>1</sup>, to be translated and popularized in game AI’s at the turn of the millennium<sup>2</sup>.
 
 #### What is a Navigation Mesh?
-**A navigation mesh (or NavMesh, as the cool kids say it) is a collection of two-dimensional polygons, which define areas of the map traversable by (AI) agents<sup>3</sup>**. A pathfinding algorithm, such as A* can then be used to traverse said mesh. NavMeshes can be created manually or automatically, or through a combination of both. Most commonly, NavMeshes are static and immutable, which in plain English means that the NavMesh doesn't change during runtime. Dynamic NavMeshes also exist, but are harder to implement and NavMesh recalculation might be costly, depending on the manner of implementation<sup>4</sup>. **For this project I solely be focused on static NavMeshes.**
+**A navigation mesh (or NavMesh, as the cool kids say it) is a collection of two-dimensional polygons, which define areas of the map traversable by (AI) agents<sup>3</sup>**. A pathfinding algorithm, such as A* can then be used to traverse said mesh. NavMeshes can be created manually or automatically, or through a combination of both. Most commonly, NavMeshes are static and immutable, which in plain English means that the NavMesh doesn't change during runtime. Dynamic NavMeshes also exist, but are harder to implement and NavMesh recalculation might be costly, depending on the manner of implementation<sup>4</sup>. **For this project I solely focused on static NavMeshes.**
 
 ## 2D NavMesh: Design & Implementation
 #### Polygon Expansion
